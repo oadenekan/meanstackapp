@@ -1,0 +1,51 @@
+<section data-ng-controller="mapController" style="margin-top: 100px;">
+
+    <!-- <div class="row">
+        <div class="col-xs-8">
+            <input type="text" class="form-control col-xs-8 input-lg" id="searchBox" placeholder="Type your search location" title="Enter place name to find traffic situation" ng-model="address">
+        </div>
+        <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary col-xs-4" id="submit" value="Search" ng-click="fetchSearch()">Search</button>
+        </div>
+    </div> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <input type="text" class="form-control" id="searchBox" placeholder="Type your search location" title="Enter place name to find traffic situation" ng-model="address">
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-success" id="submit" value="Search" ng-click="fetchSearch()">Search</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="google-map-canvas" id="map-canvas" style="height: 500px; width=50%" ng-init="getLocation()">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <legend>Comments</legend>
+                    </div>
+                    <div class="form-group">
+                        <ul>
+                            <li ng-repeat="comment in comments">{{comment.body}}</li>
+                        </ul>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <input type="text" class="form-control" data-ng-model="comment" title="Enter your comment">
+                            <button type="submit" class="btn btn-primary" data-ng-click="createComment()">Comment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <br>Enjoy &amp; Keep Off Traffic,
+    <br>The Andela Team.
+</section>

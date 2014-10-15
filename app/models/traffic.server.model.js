@@ -4,56 +4,55 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
-	Schema = mongoose.Schema;
+    Schema = mongoose.Schema;
 
 /*Comments schema*/
 var CommentSchema = new Schema({
-    commOwner: {
-        type: Schema.ObjectId,
-        ref: 'User'
+    body: {
+        type: String,
+        date: Date,
+        trim: true,
+        required: 'Make a comment',
     },
-
-    comments: { 
-    	type: String, 
-    	date: Date, 
-    	trim: true, 
-    	// default: '' 
-    },
-   
     updated: {
         type: Date,
         default: Date.now
-    }
+    },
+    user: {
+        type: Schema.ObjectId,
+        ref: 'User'
+    },
+    traffic: {
+        type: Schema.ObjectId,
+        ref: 'Traffic'
+    },
 });
 
 /**
  * Traffic Schema
  */
 var TrafficSchema = new Schema({
-	title: {
-		type: String,
-		default: '',
-		required: 'Please fill Traffic name',
-		trim: true
-	},
-	content: {
-		type: String,
-		default: '',
-		trim: true
-	},
-	created: {
-		type: Date,
-		default: Date.now
-	},
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	},
-	comments: [CommentSchema],
+    created: {
+        type: Date,
+        default: Date.now
+    },
+    user: {
+        type: Schema.ObjectId,
+        ref: 'User'
+    },
+    location: {
+        type: String
+    },
+    question: {
+        type: String,
+        default: '',
+        trim: true
+    }
+    // comments: [{
+    //     type: Schema.ObjectId,
+    //     ref: 'Comment'
+    // }],
+
 });
-
-
-
-
-mongoose.model('Traffic', TrafficSchema);
 mongoose.model('Comment', CommentSchema);
+mongoose.model('Traffic', TrafficSchema);

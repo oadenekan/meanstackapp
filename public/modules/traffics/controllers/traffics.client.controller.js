@@ -9,7 +9,9 @@ angular.module('traffics').controller('TrafficsController', ['$scope', '$statePa
 		$scope.create = function() {
 			// Create new Traffic object
 			var traffic = new Traffics ({
-				name: this.name
+				title: this.name,
+				content: this.post,
+
 			});
 
 			// Redirect after save
