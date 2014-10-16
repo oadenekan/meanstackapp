@@ -9,6 +9,12 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
         $scope.url = 'https://api.foursquare.com/v2/venues/explore';
         $scope.geocoder = null;
 
+        $scope.authentication = Authentication;
+
+        // If user is signed in then redirect back home
+        if (!$scope.authentication.user) $location.path('/signin');
+
+
         $scope.getLocation = function() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function(position) {

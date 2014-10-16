@@ -1,0 +1,43 @@
+<section class="row" data-ng-controller="AuthenticationController">
+    <div class="row" data-ng-controller="HomeController">
+    <!-- slider container -->
+        
+        <div class='col-md-6'>
+        <img ng-repeat="slide in slides" ng-swipe-right="showPrev()" ng-swipe-left="showNext()" ng-show="isActive($index)" ng-src="{{slide}}" style="width: 100%; height: 420px; background-size: contain;" />
+             
+                <!-- prev / next controls -->
+                <a class="arrow prev" href="#!" ng-click="showPrev()"></a>
+                <a class="arrow next" href="#!" ng-click="showNext()"></a>
+        </div>
+         <div class="container-fluid col-md-6">
+    <h3 class="text-center col-xs-offset-0 col-xs-6 col-md-offset-2 col-md-6">Sign in</h3>
+        <div class="col-xs-offset-0 col-xs-6 col-md-offset-2 col-md-6">
+            <form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
+                <fieldset>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                    </div>
+                    <div class="text-center form-group">
+                        <button type="submit" class="btn btn-primary">Sign in</button>&nbsp; or&nbsp;
+                        <a href="/#!/signup">Sign up</a>
+                    </div>
+                    <div class "forgot-password col-xs-offset-0 col-xs-6 col-md-offset-4 col-md-6">
+                        <a href="/#!/password/forgot">Forgot your password?</a>
+                    </div>
+                    <div data-ng-show="error" class="text-center text-danger">
+                        <strong data-ng-bind="error"></strong>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+</div>
+
+
+
+        <div>
+</section>
