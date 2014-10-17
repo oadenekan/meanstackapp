@@ -11,7 +11,7 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
         $stateProvider.
         state('home', {
             url: '/',
-            templateUrl: 'modules/core/views/authentication/signin.client.view.html'
+            templateUrl: 'modules/core/authentication/signin.client.view.html'
         }).
         state('map', {
             url: '/traffic',
