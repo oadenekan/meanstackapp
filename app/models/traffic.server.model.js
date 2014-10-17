@@ -21,6 +21,10 @@ var CommentSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
+    username: {
+        type: String,
+        trim: true
+    },
     traffic: {
         type: Schema.ObjectId,
         ref: 'Traffic'

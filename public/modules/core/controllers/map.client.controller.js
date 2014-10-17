@@ -6,7 +6,6 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
         $scope.map = null;
         $scope.marker = null;
         $scope.currentPosition = null;
-        $scope.url = 'https://api.foursquare.com/v2/venues/explore';
         $scope.geocoder = null;
 
         $scope.getLocation = function() {
@@ -78,7 +77,6 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
                     ].join(' ');
                 }
             });
-            console.log('what hapeening:' + address);
         };
         $scope.initializeSearch();
 
@@ -88,7 +86,6 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
             $scope.geocoder.geocode({
                 'address': $scope.address
             }, function(results) {
-                // console.log(results);
                 var newLat = results[0].geometry.location.lat();
                 var newLng = results[0].geometry.location.lng();
                 var mapOptions = {
@@ -104,25 +101,6 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
                 var lat = (results[0].geometry.location.lat());
                 var lng = (results[0].geometry.location.lng());
                 var latlng = (lat + ', ' + lng);
-                var url = 'https://api.foursquare.com/v2/venues/explore';
-                var config = {
-                    params: {
-                        client_secret: 'QWVA0TKCGU404SQEZGSUMBYWC5FB523KQPRTQWG2K3AXF00H',
-                        client_id: 'CTQUBJ0VCHZS5O405Z0G5SCRCWVECGGJ3QKLTRVSRUG2RI0E',
-                        ll: '',
-                        radius: '50000',
-                        v: '20140707',
-                        query: '',
-                        callback: 'JSON_CALLBACK'
-                    }
-                };
-                config.params.ll = latlng;
-                config.params.query = $scope.searchfor;
-                $http.jsonp($scope.url, config).success(function(reply) {
-                    $scope.preloader = false;
-                    $scope.datas = reply.response.groups[0].items;
-                });
-                // console.log("what's hapeening: " + $scope.fetchSearch());
             });
             $scope.checkLocation($scope.address);
         };
@@ -130,16 +108,11 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
 
         // This function checks the database to see if this location exists
         $scope.checkLocation = function(locale) {
-            // $scope.storedLocation = [];
-            console.log('check location is running');
             $scope.place = Traffics.query({
                 location: locale
             });
             
-            console.log($scope.place.length);
-            
-            if($scope.place.length !== 0){
-                console.log('Found');
+            if($scope.place.$resolved && !$scope.place.length){
                 $scope.traffic = $scope.place[0];
 
                 $scope.findComments();
@@ -150,10 +123,7 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
                 });
 
                 traffics.$save(function(res) {
-                    console.log("sucsful save traffic");
-
                     $scope.traffic = res;
-
                     $scope.findComments();
                 });
             }
@@ -168,10 +138,9 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
             });
 
             comment.$save({trafficId: $scope.traffic._id}, function(response) {
-                console.log('Suceess comment', response.body);
+                $scope.comments = response.comments;
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
-                console.log('Error message');
             });
 
         };

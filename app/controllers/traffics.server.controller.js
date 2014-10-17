@@ -127,6 +127,7 @@ exports.addComment = function(req, res) {
     var comment = new Comment(req.body);
     comment.traffic = req.traffic;
     comment.user = req.user;
+    comment.username = req.user.displayName;
     req.traffic.comments.unshift(comment);
     
     comment.save(function(err) {
@@ -141,9 +142,7 @@ exports.addComment = function(req, res) {
                 }
             });
         }
-    });
-    
-    
+    });   
 };
 
 
