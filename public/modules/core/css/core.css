@@ -1,9 +1,9 @@
 .content {
     margin-top: 50px;
-    /*background-image: url('../img/trafficRoads.png');
+    background-image: url('../img/background.png');
     background-repeat: no-repeat;
     background-position: left;
-    background-size: contain;*/
+    background-size: container;
 }
 .undecorated-link:hover {
     text-decoration: none;
@@ -21,7 +21,18 @@
     padding-bottom: 40px;
 }
 
-.form-group {
-	padding: 1em;
-	color: rgba(0, 0, 0, .5);
+.commentDiv {
+	text-align: center;
+	width: 27em;
+	padding: 1em 1em;
+	background-color: rgba(0, 0, 0, .6);
+	color: #fff;
+	border-radius: 1em;
 }
+.comInput, .searchInput{
+	margin-bottom: 2em;
+	margin-top: 2em;
+}
+ .infoFt{
+ 	color: #fff;
+ }
