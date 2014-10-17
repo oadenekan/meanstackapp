@@ -31,7 +31,8 @@
                         <legend>Comments</legend>
                     </div>
                     <div class="form-group">
-                        <ul>
+                        <div ng-show="comments.length === 0">No comments yet</div>
+                        <ul ng-hide="comments.length === 0">
                             <li ng-repeat="comment in comments">{{comment.body}}</li>
                         </ul>
                     </div>

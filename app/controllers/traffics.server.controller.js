@@ -75,25 +75,13 @@ exports.delete = function(req, res) {
  * List of Traffics
  */
 exports.list = function(req, res) {
-    Traffic.find().sort('-created').populate('user', 'displayName').exec(function(err, traffics) {
-        if (err) {
-            return res.status(400).send({
-                message: errorHandler.getErrorMessage(err)
-            });
-        } else {
-            res.jsonp(traffics);
-        }
-    });
-};
+    var query = {};
 
-exports.findLocation = function(req, res) {
-    console.log(req.query.location);
-    var location = req.query.location;
-    Traffic.find({
-        'location': location
-    }).sort('-created').populate('user', 'displayName').exec(function(err, traffics) {
-        console.log('Traffic');
-        console.log(traffics);
+    if(req.query.location && req.query.location !== "") {
+        query.location = req.query.location;
+    }
+
+    Traffic.find(query).populate('user', 'displayName').exec(function(err, traffics) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
@@ -107,15 +95,13 @@ exports.findLocation = function(req, res) {
 /**
  * List of Traffic comments
  */
-
 exports.commentList = function(req, res) {
-    Comment.find().sort('-created').populate('user').populate('traffic').populate('comments', 'body').exec(function(err, comment) {
+    Comment.find({traffic: req.traffic._id}).sort('-created').populate('user').populate('traffic').exec(function(err, comment) {
         if (err) {
             return res.status(400).send({
                 message: errorHandler.getErrorMessage(err)
             });
         } else {
-            console.log('working');
             res.jsonp(comment);
         }
     });
@@ -138,25 +124,26 @@ exports.trafficByID = function(req, res, next, id) {
  * Adding a comment
  */
 exports.addComment = function(req, res) {
-    console.log(req);
     var comment = new Comment(req.body);
-    var traffic = req.traffic;
-    console.log(comment);
     comment.traffic = req.traffic;
     comment.user = req.user;
-    comment.comment = req.comment;
-    traffic.comments.unshift(comment);
-    comment.save();
-    console.log(comment);
-    traffic.save(function(err) {
-        if (err) {
-            return res.send(400, {
-                message: errorHandler.getErrorMessage(err)
+    req.traffic.comments.unshift(comment);
+    
+    comment.save(function(err) {
+        if(!err) {
+            req.traffic.save(function(err) {
+                if (err) {
+                    return res.send(400, {
+                        message: errorHandler.getErrorMessage(err)
+                    });
+                } else {
+                    res.jsonp(req.traffic);
+                }
             });
-        } else {
-            res.jsonp(traffic);
         }
     });
+    
+    
 };
 
 
@@ -164,9 +151,11 @@ exports.addComment = function(req, res) {
  * Delete a comment
  */
 exports.deleteComment = function(req, res) {
+    
     var traffic = req.traffic;
 
     traffic.comments.id(req.params.commentId).remove();
+    
     traffic.save(function(err) {
         if (err) {
             return res.send(400, {

@@ -6,7 +6,7 @@ module.exports = function(app) {
     var comments = require('../../app/controllers/traffics');
     // Traffics Routes
     app.route('/traffics')
-        .get(traffics.findLocation)
+        .get(traffics.list)
         .post(users.requiresLogin, traffics.create);
 
     // app.route('/comments')
@@ -30,5 +30,5 @@ module.exports = function(app) {
     app.param('trafficId', traffics.trafficByID);
 
     // Finish by binding the Comment middleware
-    app.param('commentId', traffics.commentByID);
+    app.param('commentId', comments.commentByID);
 };

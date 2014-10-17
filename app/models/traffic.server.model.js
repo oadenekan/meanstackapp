@@ -10,11 +10,10 @@ var mongoose = require('mongoose'),
 var CommentSchema = new Schema({
     body: {
         type: String,
-        date: Date,
         trim: true,
         required: 'Make a comment',
     },
-    updated: {
+    created: {
         type: Date,
         default: Date.now
     },
@@ -43,15 +42,10 @@ var TrafficSchema = new Schema({
     location: {
         type: String
     },
-    question: {
-        type: String,
-        default: '',
-        trim: true
-    }
-    // comments: [{
-    //     type: Schema.ObjectId,
-    //     ref: 'Comment'
-    // }],
+    comments: [{
+        type: Schema.ObjectId,
+        ref: 'Comment'
+    }],
 
 });
 mongoose.model('Comment', CommentSchema);

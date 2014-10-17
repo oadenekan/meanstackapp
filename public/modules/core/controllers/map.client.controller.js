@@ -83,9 +83,6 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
         $scope.initializeSearch();
 
         $scope.fetchSearch = function() {
-            $scope.datas = null;
-            $scope.preloader = true;
-            $scope.welcome = true;
             $scope.geocoder = new google.maps.Geocoder();
             $scope.address = $scope.location;
             $scope.geocoder.geocode({
@@ -130,156 +127,60 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
             $scope.checkLocation($scope.address);
         };
 
-        // $scope.checkLocation = function(locale) {
-        //     $scope.commentsArray = [];
-        //     console.log('check location is running');
-        //     $scope.place = Traffics.query().$promise.then(function(response) {
-        //         $scope.storedLocations = response;
-        //         console.log("storedLocations");
-        //         console.log($scope.storedLocations);
-        //         angular.forEach($scope.storedLocations, function(value, key) {
-        //             console.log("locale");
-        //             console.log(locale);
-        //             console.log("value location");
-        //             console.log(value.location);
-        //             if (locale === value.location) {
-        //                 console.log(value.location);
-        //                 $scope.getComments();
-        //             } else {
-        //                 $scope.createLocation(locale);
-        //             }
-        //         });
-        //     });
 
-        // };
+        // This function checks the database to see if this location exists
         $scope.checkLocation = function(locale) {
-            $scope.storedLocation = [];
+            // $scope.storedLocation = [];
             console.log('check location is running');
-            $scope.bool = true;
             $scope.place = Traffics.query({
-                'location': locale
-            }).$promise.then(function(response) {
-                $scope.locationArray = response;
-                console.log('check location array');
-                console.log(response);
-                console.log('check location array done');
-                angular.forEach($scope.locationArray, function(value, key) {
-                    $scope.storedLocation[key] = value;
-                    console.log('location check');
-                    console.log($scope.storedLocation);
-                    console.log('location check done');
-                    if ($scope.storedLocation.location === locale) {
-                        $scope.getComments();
-                        $scope.bool = false;
-                    }
-                    // console.log(value);
-                    // console.log("storedLocations");
-                    // console.log($scope.storedLocation.location);
-                    // console.log('length');
-                    // console.log($scope.locationArray);
-                    // for (var i = 0; i <= $scope.storedLocation.length; i++) {
-                    //     if ($scope.storedLocation[i].location === locale) {
-                    //         $scope.getComments();
-                    //         $scope.bool = false;
-                    //     }
-                    // }
-                });
-                // if ($scope.bool) {
-                //     $scope.createLocation(locale);
-                // }
-
+                location: locale
             });
+            
+            console.log($scope.place.length);
+            
+            if($scope.place.length !== 0){
+                console.log('Found');
+                $scope.traffic = $scope.place[0];
 
-        };
+                $scope.findComments();
 
-        // $scope.getComments = function() {
-        //     console.log('get comments is working');
-        //     $scope.allComments = TrafficsComments.query({
-        //         trafficId: $stateParams.trafficId
-        //     }).$promise.then(function(response) {
-        //         $scope.trafficIdComments = response;
-        //         console.log('Traffic Id');
-        //         console.log($scope.trafficIdComments);
-        //     });
-
-        // };
-
-        // $scope.createLocation = function(newLocation) {
-        //     console.log('createlocation is running');
-        //     var location = new Traffics({
-        //         location: newLocation
-        //     });
-        //     location.$save(function(response) {
-        //             $scope.location = response;
-        //             $scope.commentInput = '';
-        //         },
-        //         function(errorResponse) {
-        //             $scope.error = errorResponse.data.message;
-        //         });
-        // };
-
-        $scope.createComment = function() {
-                var traffic = new Traffics({
-                    location: $scope.address
+            } else {
+                var traffics = new Traffics({
+                    location: locale
                 });
 
-                traffic.$save(function(res) {
+                traffics.$save(function(res) {
                     console.log("sucsful save traffic");
 
-                    var comment = new TrafficsComments({
-                        body: $scope.comment,
-                        trafficId: res._id
-                    });
+                    $scope.traffic = res;
 
-                    comment.$save(function(response) {
-                            // var trafficId = $stateParams.trafficId;
-                            // $scope.comments = '';
-
-                            console.log('Suceess comment', response.body);
-                        },
-                        function(errorResponse) {
-                            $scope.error = errorResponse.data.message;
-                            console.log('Error message');
-                        });
+                    $scope.findComments();
                 });
             }
-            // console.log(comment);
+
+        }
 
 
-        // });
+        $scope.createComment = function() {
 
-
-
-
-        // console.log(commentInput);
-
-
-
-        // };
-
-        $scope.findComments = function() {
-            $scope.comment = TrafficsComments.query({
-                trafficId: $stateParams.trafficId
+            var comment = new TrafficsComments({
+                body: $scope.comment
             });
+
+            comment.$save({trafficId: $scope.traffic._id}, function(response) {
+                console.log('Suceess comment', response.body);
+            }, function(errorResponse) {
+                $scope.error = errorResponse.data.message;
+                console.log('Error message');
+            });
+
         };
 
-
-        // $scope.find = function() {
-        //     $scope.comments = Comments.query();
-        //     console.log($scope.comments);
-        // }
-
-        // $scope.findOne = function() {
-        //     $scope.comment = Comments.get({
-        //         commentId: $stateParams.commentId
-        //     })
-        // }
-
-        // article.$update(function() {
-        //     $location.path('articles/' + article._id);
-        // }, function(errorResponse) {
-        //     $scope.error = errorResponse.data.message;
-        // });
+        $scope.findComments = function() {
+            $scope.comments = TrafficsComments.query({
+                trafficId: $scope.traffic._id
+            });
+        };
 
     }
 ]);
