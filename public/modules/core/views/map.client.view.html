@@ -1,4 +1,4 @@
-<section data-ng-controller="mapController" style="margin-top: 100px;">
+<section data-ng-controller="mapController">
     <div class="container">
         <div class="row">
         <div class="col-md-4 searchInput">
@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-4">
                 <form class="form-horizontal" role="form">
-                    <div class="form-group">
+                    <div class="form-group comHeader">
                         <legend>Comments</legend>
                     </div>
                     <div class="commentDiv">
@@ -40,7 +40,7 @@
                             <input type="text" class="form-control comInput" data-ng-model="comment" title="Enter your comment">
                         </div>
                          <div class="col-sm-10 col-sm-offset-2">
-                            <button type="submit" class="btn btn-primary" data-ng-click="createComment()">Comment</button>
+                            <button type="submit" class="btn btn-primary btn" data-ng-click="createComment()">Comment</button>
                          </div>
                         </div>
                     </div>

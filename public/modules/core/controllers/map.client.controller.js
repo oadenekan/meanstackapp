@@ -110,24 +110,23 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
         $scope.checkLocation = function(locale) {
             $scope.place = Traffics.query({
                 location: locale
-            });
-            
-            if($scope.place.$resolved && !$scope.place.length){
-                $scope.traffic = $scope.place[0];
-
-                $scope.findComments();
-
-            } else {
-                var traffics = new Traffics({
-                    location: locale
-                });
-
-                traffics.$save(function(res) {
-                    $scope.traffic = res;
+            }, function(data) {
+                if(data.length > 0){
+                    $scope.traffic = data[0];
                     $scope.findComments();
-                });
-            }
 
+                } else {
+                    var traffics = new Traffics({
+                        location: locale
+                    });
+
+                    traffics.$save(function(res) {
+                        $scope.traffic = res;
+                        $scope.findComments();
+                    });
+                }
+
+            });
         }
 
 
