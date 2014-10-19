@@ -218,6 +218,7 @@ angular.module('map').controller('mapController', [
       }, function (errorResponse) {
         $scope.error = errorResponse.data.message;
       });
+      $scope.comment = '';
     };
     $scope.findComments = function () {
       $scope.comments = TrafficsComments.query({ trafficId: $scope.traffic._id });
