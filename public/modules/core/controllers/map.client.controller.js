@@ -141,6 +141,7 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
+                $scope.comment = '';
 
         };
 
