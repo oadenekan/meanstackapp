@@ -77,7 +77,7 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
     var query = {};
 
-    if(req.query.location && req.query.location !== "") {
+    if(req.query.location && req.query.location !== '') {
         query.location = req.query.location;
     }
 

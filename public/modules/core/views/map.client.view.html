@@ -1,14 +1,14 @@
 <section data-ng-controller="mapController">
     <div class="container">
         <div class="row">
-        <div class="col-md-4 searchInput">
-            <input type="text" class="form-control" id="searchBox" placeholder="Type your search location" title="Enter place name to find traffic situation" ng-model="address">
-        </div>
-        <div class="col-md-2 searchInput">
-            <button type="submit" class="btn btn-success" id="submit" value="Search" ng-click="fetchSearch()">Search</button>
-        </div>
+            <div class="col-md-4 searchInput">
+                <input type="text" class="form-control" id="searchBox" placeholder="Type your search location" title="Enter place name to find traffic situation" ng-model="address">
+            </div>
+            <div class="col-md-2 searchInput">
+                <button type="submit" class="btn btn-success" id="submit" value="Search" ng-click="fetchSearch()">Search</button>
+            </div>
 
-    </div>
+        </div>
         <div class="row">
             <div class="col-md-8">
                 <div class="google-map-canvas" id="map-canvas" style="height: 500px; width=50%" ng-init="getLocation()">
@@ -20,35 +20,38 @@
                         <legend>Comments</legend>
                     </div>
                     <div class="commentDiv">
-                    <div class="form-group">
-                        <div ng-show="comments.length === 0">No comments yet</div>
-                        <div ng-repeat="comment in comments" ng-hide="comments.length === 0">
+                        <div class="form-group">
+                            <div class="form-group comInput">
+                                <div class="col-sm-10 col-sm-offset-2 container">
+                                    <input type="text" class="form-control comInput" data-ng-model="comment" title="Enter your comment">
+                                </div>
+                                <div class="col-sm-10 col-sm-offset-2 container">
+                                    <button type="submit" class="btn btn-primary btn" data-ng-click="createComment()">Comment</button>
+                                </div>
+                            </div>
+                            <div ng-show="comments.length === 0">No comments yet</div>
+                            <div ng-repeat="comment in comments" ng-hide="comments.length === 0">
                                 <p>{{comment.body}}</p>
-                            <small>
-                                <em class="text-muted">
-                                    Posted on
-                                    <span>{{comment.created | date: 'medium'}}</span>
-                                    by
-                                    <span>{{comment.username}}</span><hr>
-                                </em>
-                            </small>
-                        </div>
-                    </div>
-                    </div>
-                    <div class="form-group comInput">
-                        <div class="col-sm-10 col-sm-offset-2">
-                            <input type="text" class="form-control comInput" data-ng-model="comment" title="Enter your comment">
-                        </div>
-                         <div class="col-sm-10 col-sm-offset-2">
-                            <button type="submit" class="btn btn-primary btn" data-ng-click="createComment()">Comment</button>
-                         </div>
+                                <small>
+                                    <em class="text-muted">
+                                        Posted on
+                                        <span>{{comment.created | date: 'medium'}}</span>
+                                        by
+                                        <span>{{comment.username}}</span>
+                                        <hr>
+                                    </em>
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
+            
         </div>
+         <br>
+        <strong class="infoFt">Enjoy &amp; Keep Off Traffic,</strong>
+        <br>
+        <strong class="infoFt">The Andela Team.</strong>
     </div>
-
-    <br><strong class="infoFt">Enjoy &amp; Keep Off Traffic,</strong>
-    <br><strong class="infoFt">The Andela Team.</strong>
+   
 </section>

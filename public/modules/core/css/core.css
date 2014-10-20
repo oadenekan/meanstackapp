@@ -1,16 +1,20 @@
+body {
+  	font-family: "Roboto", sans-serif;
+    background-image: url('/modules/core/img/background2.jpg');
+    background-repeat: repeat-y;
+    background-size: cover;
+    background-position: fixed;
+}
 .content {
     margin-top: 50px;
-    background-image: url('/modules/core/img/background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
 }
-html,body,.content{
-	height: 100%;
+html, .content {
+    height: 100%;
 }
 .undecorated-link:hover {
     text-decoration: none;
 }
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak{
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
 }
 .ng-invalid.ng-dirty {
@@ -23,35 +27,48 @@ html,body,.content{
     padding-bottom: 40px;
 }
 .login {
-	margin-top: 12%;
+    margin-top: 12%;
 }
-#new{
- 	margin-top: 3%;
- }
- a:hover{
-	color: #fff;
+#new {
+    margin-top: 3%;
 }
-
-.comHeader{
-	color: #fff;
-	margin-top: 1em;
-	text-align: center;
+a:hover {
+    color: #fff;
+}
+.comHeader {
+    color: #fff;
+    margin-top: 1em;
+    text-align: center;
 }
 .commentDiv {
-	text-align: center;
-	width: 27em;
-	padding: 1em 1em;
-	background-color: rgba(0, 0, 0, .6);
-	color: #fff;
-	border-radius: 1em;
+    text-align: center;
+    width: 27em;
+    padding: 1em 1em;
+    background-color: rgba(0, 0, 0, .6);
+    color: #fff;
+    border-radius: 1em;
 }
-.comInput, .searchInput{
-	margin-bottom: 1em;
-	margin-top: 1em;
+.comInput, .searchInput {
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
-.btn{
-	text-align: center;
+.comInput{
+	padding-right: 15%;
 }
- .infoFt{
- 	color: #fff;
- }
+.btn {
+    text-align: center;
+}
+.infoFt {
+    color: #fff;
+}
+
+/************************************
+MEDIA QUERIES
+************************************/
+
+@media screen and (max-width: 767px){
+
+.comInput{
+	padding-left: 15%;
+}
+}

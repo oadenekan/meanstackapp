@@ -29,7 +29,7 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
             var mapOptions = {
                 zoom: 15,
                 center: new google.maps.LatLng(coordinates.latitude, coordinates.longitude),
-                mapTypeId: google.maps.MapTypeId.HYBRID,
+                mapTypeId: google.maps.MapTypeId.TERRAIN,
                 panControl: true,
                 zoomControl: true,
                 mapTypeControl: true,
@@ -101,8 +101,11 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
                 var lat = (results[0].geometry.location.lat());
                 var lng = (results[0].geometry.location.lng());
                 var latlng = (lat + ', ' + lng);
+
             });
             $scope.checkLocation($scope.address);
+            $scope.address = '';
+            $scope.marker = '';
         };
 
 
@@ -111,7 +114,7 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
             $scope.place = Traffics.query({
                 location: locale
             }, function(data) {
-                if(data.length > 0){
+                if (data.length > 0) {
                     $scope.traffic = data[0];
                     $scope.findComments();
 
@@ -127,7 +130,7 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
                 }
 
             });
-        }
+        };
 
 
         $scope.createComment = function() {
@@ -136,12 +139,14 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
                 body: $scope.comment
             });
 
-            comment.$save({trafficId: $scope.traffic._id}, function(response) {
+            comment.$save({
+                trafficId: $scope.traffic._id
+            }, function(response) {
                 $scope.comments = response.comments;
             }, function(errorResponse) {
                 $scope.error = errorResponse.data.message;
             });
-                $scope.comment = '';
+            $scope.comment = '';
 
         };
 

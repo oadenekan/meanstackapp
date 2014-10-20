@@ -125,7 +125,7 @@ angular.module('map').controller('mapController', [
       var mapOptions = {
           zoom: 15,
           center: new google.maps.LatLng(coordinates.latitude, coordinates.longitude),
-          mapTypeId: google.maps.MapTypeId.HYBRID,
+          mapTypeId: google.maps.MapTypeId.TERRAIN,
           panControl: true,
           zoomControl: true,
           mapTypeControl: true,
@@ -195,6 +195,8 @@ angular.module('map').controller('mapController', [
         var latlng = lat + ', ' + lng;
       });
       $scope.checkLocation($scope.address);
+      $scope.address = '';
+      $scope.marker = '';
     };
     // This function checks the database to see if this location exists
     $scope.checkLocation = function (locale) {
