@@ -56,7 +56,7 @@ angular.module('map').controller('mapController', ['$scope', '$http', '$statePar
             google.maps.event.addListener($scope.map, 'center_changed', function() {
                 window.setTimeout(function() {
                     $scope.map.panTo($scope.marker.getPosition());
-                }, 40000);
+                }, 100000);
             });
         };
 

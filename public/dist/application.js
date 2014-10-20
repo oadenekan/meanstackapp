@@ -150,7 +150,7 @@ angular.module('map').controller('mapController', [
       google.maps.event.addListener($scope.map, 'center_changed', function () {
         window.setTimeout(function () {
           $scope.map.panTo($scope.marker.getPosition());
-        }, 40000);
+        }, 100000);
       });
     };
     $scope.initializeSearch = function () {
